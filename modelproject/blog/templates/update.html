@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+    {% block content %}
+    <form action="{% url 'blog:update' blog.id%}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="title" class="title-inputs" value="{{blog.title}}"><br><br>
+        <textarea name="body" class="body-inputs" cols="30" rows="10">{{blog.body}}</textarea>
+        <input type="submit" value="완료">
+    </form>
+    {%endblock%}

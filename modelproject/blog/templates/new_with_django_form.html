@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block content %}
+    <div>
+        <img src="{% static 'img3.jpg'%}" style="position: absolute; left: 0px;
+        top: 0px; z-index: -1; opacity: 0.75; width: 100%; height:450px;">
+        <div class="home-welcome">
+        <h1 style="color: white;">새로운 글 쓰기✍🏻</h1>
+        </div>
+    </div>
+<form action="{% url 'blog:create' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="btn-green">작성하기</button>
+</form>
+{%endblock%}

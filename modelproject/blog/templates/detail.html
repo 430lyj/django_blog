@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+    {% block content %}
+    {% load static %}
+    <div>
+        <img src="{% static 'img3.jpg'%}" style="position: absolute; left: 0px;
+        top: 0px; z-index: -1; opacity: 0.75; width: 100%; height:450px;">
+        <div class="home-welcome">
+        {% if user.is_authenticated %}
+        <h3 style="color: white;">{{user.location}}에 살고 {{user.university}}에 다니는 {{user.nickname}}님,<br>안녕하세요!</h3>
+        {% else %}
+        <h3 style="color: white;"">Blog에 오신 것을 환영합니다.</h3>
+        {% endif %}
+        </div>
+    </div>
+    <h1>📌{{blog.title}} </h1>
+    <h3>🖋{{blog.writer}}</h3>
+    <p>{{blog.body|linebreaks}}</p>
+    {% if blog.image %}
+    <p><img src="{{blog.image.url}}" alt="" style="max-width: 500px;"></p>
+    {% endif %}
+    {% if user.username == blog.writer %}
+    <a href="{% url 'blog:update' blog.id%}" class="btn-green">Edit</a>
+    <a href="{% url 'blog:delete' blog.id%}" class="btn-green">Delete</a>
+    {% endif %}
+    <form action="{% url 'blog:detail' blog.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>댓글 : <input type="text" name="body" class="comment-inputs"> 
+            <button type="submit" class="btn-green" style="font-size: 10px;">작성하기</button>
+        </p>
+    </form>
+    {% for comment in comments %}
+    {% if comment.user != null %}
+    <p>{{comment.user}} : {{comment.body}} 
+        {% if comment.user == user %}
+        <a href={% url 'blog:commentDelete' comment.id %}>삭제</a>
+    </p>
+    
+    {%endif%}
+    {% else %}
+    <p>익명 : {{comment.body}}</p>
+    {%endif%}
+    {%endfor%}
+
+    <a href="{% url 'home' %}" class= "btn-green">Home</a> 
+    {%endblock%}
