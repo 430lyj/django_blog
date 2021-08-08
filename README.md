@@ -9,7 +9,7 @@
 To try it out, clone the project soucre.
 ```bash
 # Clone project
-git clone https://github.com/430lyj/django_blog_practice.git
+git clone https://github.com/430lyj/django_blog.git
 
 # For virtual environment and requirements
 python -m venv venv
